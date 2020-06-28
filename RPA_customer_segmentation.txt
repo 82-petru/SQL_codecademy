@@ -1,0 +1,26 @@
+https://gist.github.com/b84acc884d039360cf5884e9f7a2e91e
+
+ -- RPA customer segmentation 
+ SELECT * FROM users LIMIT 20;
+  -- find the email addresses and birthdays of users whose birthday is between 1980 and 1989
+
+SELECT email, birthday FROM users WHERE birthday BETWEEN '1980-01-01' AND '1989-12-31' ORDER BY birthday ASC LIMIT 10;
+
+-- find the emails and creation date of users whose signed up prior to may 2017 
+SELECT email, created_at FROM users WHERE created_at < '2017-05' LIMIT 10;
+
+-- find the emails of the users who received bears test 
+SELECT DISTINCT test FROM users;
+SELECT email, test FROM users WHERE test == "bears" LIMIT 10;
+
+-- 4 adds were run over this period and two sets of ad copy (set1 and set2) and both were run on two search engine sites (AAA and BBB) -- find all the emails of all users who received a campaign on website BBB 
+-- SELECT email, campaign FROM users WHERE campaign = "BBB-1" OR campaign = "BBB-2";
+SELECT email, campaign FROM users WHERE campaign LIKE "BBB%" LIMIT 10;
+
+-- find all the emails of all users who received ad copy 2 in their campaign 
+SELECT email, campaign FROM users WHERE campaign LIKE "%2%" LIMIT 10;
+
+--- find the emails for all users who received both a campaign and a test this users have non-empty entries
+SELECT email, test, campaign FROM users WHERE campaign  IS NULL AND test  IS NULL;
+
+-- LIMIT was voluntary placed to display only specific number of lines in order to have a better view and understanding 
