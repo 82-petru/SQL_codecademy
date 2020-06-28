@@ -21,6 +21,4 @@ SELECT email, campaign FROM users WHERE campaign LIKE "BBB%" LIMIT 10;
 SELECT email, campaign FROM users WHERE campaign LIKE "%2%" LIMIT 10;
 
 --- find the emails for all users who received both a campaign and a test this users have non-empty entries
-SELECT email, test, campaign FROM users WHERE campaign  IS NULL AND test  IS NULL;
-
--- LIMIT was voluntary placed to display only specific number of lines in order to have a better view and understanding 
+SELECT email, test, campaign FROM users WHERE campaign  IS NOT NULL AND test  IS NOT NULL;
