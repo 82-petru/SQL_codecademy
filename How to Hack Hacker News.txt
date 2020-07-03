@@ -1,0 +1,38 @@
+https://gist.github.com/f1d94911b505c8fc790fb74e931344d9
+
+--How to Hack Hacker News
+ --Hacker News is a popular website run by Y Combinator. It’s widely known by people in the tech industry as a community site for sharing news, showing off projects, asking questions, among other things.
+-- Tabelul contine cinci coloane dintre care title reprezinat titlul povestei, user cel care a trimis povestea, score este scorul dat pentru povestea respectiva, timestamp este momentul cand povestea a fost creata, url este linkul povestei.
+ -- get the feeling with table content
+ --SELECT user, SUM(score) FROM hacker_news GROUP BY user ORDER BY 2 DESC;
+ SELECT * FROM hacker_news LIMIT 10; 
+ -- Start by getting a feel for the hacker_news table!
+ SELECT title, score FROM hacker_news ORDER BY score DESC LIMIT 10;
+ --First, find the total score of all the stories.
+ SELECT SUM(score) FROM hacker_news;
+ --Find the individual users who have gotten combined scores of more than 200, and their combined scores. GROUP BY and HAVING are needed!
+SELECT user, SUM(score) FROM hacker_news GROUP BY user HAVING SUM(score) > 200 ORDER BY 2 DESC;
+--SELECT user, Count(user) FROM hacker_news GROUP BY user ORDER BY 2 DESC LIMIT 10;
+--SELECT * FROM hacker_news WHERE user = 'jacquesm';
+SELECT 1412 / 6366;-- is 22% the 4 users have combined 22% of total score 
+--How many times has each offending user posted this link?The url of the video is:https://www.youtube.com/watch?v=dQw4w9WgXcQ
+SELECT user, COUNT(url) FROM hacker_news WHERE url LIKE "%v=dQw4w9WgXcQ%" GROUP BY user ORDER BY 2 DESC;
+-- categorize url column after each site GitHub, Medium, or New York Times.For this case you can make use of CASE statement.
+-- On the same query add a column for the number of category in each URL by using COUNT(), also group by the CASE statement
+SELECT  COUNT(*),
+  CASE 
+    WHEN url LIKE '%github.com%' THEN 'GITHUB'
+    WHEN url LIKE '%nytimes.com%' THEN 'New York Times'
+    WHEN url LIKE '%medium.com%' THEN 'Medium'
+    ELSE "Other"
+  END AS 'Source'
+FROM hacker_news GROUP BY Source ORDER BY Source ASC LIMIT 10;
+--If we observe how is the format of timing 2018-05-08T12:30:00Z if T and Z is ignored the forma is YYYY-MM-DD HH:MM:SS T is the separator between date and time and is abreviation for Time, Z  stands for Zero timezone 
+--SELECT timestamp FROM hacker_news LIMIT 10;
+-- SQLite comes with a strftime() function - this function can return hour, date, year, minute, second, month  takes two arguments (format, column)
+--For strftime(__, timestamp): %Y returns the year (YYYY), %m returns the month (01-12), %d returns the day of the month (1-31), %H returns 24-hour clock (00-23)%M returns the minute (00-59), %S returns the seconds (00-59)
+
+SELECT timestamp, strftime('%H', timestamp) AS 'Hour' FROM hacker_news GROUP BY 1 LIMIT 20;
+-- Write a query that returns three columns the hours of the timestamp, the average score, the count of stories.
+SELECT  strftime('%H', timestamp) AS 'Hour', ROUND(AVG(score)) AS 'avg_score', COUNT(*) AS 'title_amount' FROM hacker_news WHERE timestamp IS NOT NULL GROUP BY 1 ORDER BY 1;
+-- edit the few things in previous query round the average score, rename the columns to make it more readable and add a WHERE clause to filter empty rows from timestamp column
