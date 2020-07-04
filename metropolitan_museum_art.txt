@@ -1,0 +1,46 @@
+The Metropolitan Museum of Art 
+located in new york is one of the worlds largest and finest musseum.
+table name is met that contains musseum collection's of american decorative arts means the collection of reprezentatives arts ranges from 1000 AD to the present day representing the art of indigenous people who lived in north america.
+
+Table has next columns:
+id - the title of the art piece
+department - the department of the art piece
+category - the category of the art piece, type of art piece
+title - the title name of the art piece, description
+artist - the name of the artist
+date - the date(s) of the art piece
+medium - the medium of the art piece, material
+country - the country of the artist
+
+https://gist.github.com/50f35b2a627f5bb0bb01926c02870010
+
+ -- The Metropolitan Museum of Art 
+ -- table name is "met" that contains musseum collection's of 'american decorative arts' means the collection of reprezentatives arts ranges from 1000 AD to the present day representing the art of indigenous people who lived in north america.
+-- Start by getting a feel for the met table:
+SELECT * FROM met LIMIT 10;
+-- how many pieces are in the |America Decorative art collection?
+SELECT COUNT(*) FROM met WHERE department = "American Decorative Arts";
+-- count the number of pieces where the category includes 'celery'
+SELECT COUNT(*) FROM met WHERE category LIKE '%celery%';
+-- find the title and medium of the oldest pieces in the ollection 
+SELECT title, medium, MIN(date) FROM met WHERE date LIKE '%1600%';
+-- find the top ten countries with the most pieces in the collection
+SELECT country, COUNT(*) AS 'pieces' FROM met WHERE country IS NOT NULL GROUP BY country ORDER BY 2 DESC LIMIT 10;
+--find the categories more then 100 pieces 
+SELECT category, COUNT(*) FROM met GROUP BY 1 HAVING COUNT(*) > 100 ORDER BY 2 DESC;
+-- count the number of pieces from medium where contains gold or silver and sort them in descending order 
+SELECT medium, COUNT(*) FROM met GROUP BY medium HAVING medium LIKE '%gold%' OR medium LIKE '%silver%' ORDER BY 2 DESC;
+--if you want to be more accurate and select exact number of gold and silver pieces 
+SELECT CASE
+    WHEN medium LIKE "%gold%" THEN 'Gold'
+    WHEN medium LIKE '%silver%' THEN 'Silver'
+    ELSE NULL
+  END AS "material",
+  COUNT(*)
+FROM met WHERE material IS NOT NULL GROUP BY 1 ORDER BY 2 DESC;
+-- find how many times is used dollar in column title
+SELECT date, MIN(title) FROM met WHERE title LIKE '%dollar%';
+-- find what artist has most pieces 
+SELECT artist, COUNT(*) FROM met WHERE artist IS NOT NULL GROUP BY 1 HAVING COUNT(*) > 5 ORDER BY 2 DESC ;
+-- find in tittle compote
+SELECT title, category, artist FROM met WHERE title LIKE '%compote%';
