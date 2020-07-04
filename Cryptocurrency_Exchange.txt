@@ -1,0 +1,36 @@
+Cryptocurrency Exchange
+
+This table commes from fiddy Cent a digital currency exchange They broker exchanges of Bitcoin, Bitcoin Cash, Ethereum, and Litecoin with fiat currencies in around 50 countries.
+
+Table name is transactions and have 6 columns: 
+id- id transaction, 
+user-id is user identification number, 
+date in format yyyy-mm-dd, 
+currency is type of digital bitcoin, 
+money_in records amount in USD the user bought 
+money_out records the amount in USD the user sold.
+
+https://gist.github.com/80ac26122c40333ec7cd4d77bcda7be7
+
+SELECT * FROM transactions LIMIT 10;
+ --what is the total money in the table?
+ SELECT SUM(money_in) FROM transactions;
+ -- what is the total money_out in the table?
+SELECT SUM(money_out) FROM transactions;
+-- how many money_in transaction are in this table and how many money_in transactions are in this table where BIT is the currency?
+SELECT CASE
+    WHEN currency = 'BIT' THEN  'Bit'
+    ELSE 'Others'
+  END AS 'coin',
+  COUNT(*) AS 'sum_currency'
+FROM transactions WHERE currency IS NOT NULL GROUP BY coin;
+-- what was the largest transaction in whole table 
+SELECT MAX(money_in), MAX(money_out) FROM transactions;
+-- what is the average money_in in the table for the currency Ethereum?
+SELECT currency, ROUND(AVG(money_in)) FROM transactions WHERE currency = 'ETH';
+-- create a ledger for the different dates 
+SELECT date, ROUND(AVG(money_in)) AS 'avg_money_in', ROUND(AVG(money_out)) AS 'avg_money_out' FROM transactions GROUP BY 1 ORDER BY 1 ASC;
+-- group by user_id and count the money_in and Money_out
+SELECT user_id, SUM(money_in), SUM(money_out), COUNT(money_in), COUNT(money_out) FROM transactions GROUP BY user_id;
+-- group the currency table and count  transaction for each currency
+SELECT currency, COUNT(*) FROM transactions GROUP BY 1 ORDER BY 2 DESC;
