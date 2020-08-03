@@ -1,0 +1,47 @@
+https://gist.github.com/d7a3e14d3cbcfe394e7872d4cded7f8d
+
+--World Population 
+-- You'll work with a dataset of world population by country data from recent years, two tables: population_years and countries  
+population_years contain id primary key, population, year, country_id 
+countries contain id primary key, name country, continent
+
+-- get a  felling with tables containtment
+SELECT * FROM countries LIMIT 10;
+SELECT * FROM population_years LIMIT 10;
+
+--how many entries are in table from Africa?
+SELECT COUNT(*) FROM countries WHERE continent = 'Africa';
+
+-- what was the total population of the continent of Ocenia in 2005
+SELECT SUM(population) FROM population_years JOIN countries 
+ON population_years.country_id = countries.id WHERE continent = 'Oceania' AND year = 2005; 
+
+-- what is the average population of countries in South America 
+SELECT AVG(population) FROM population_years JOIN countries 
+ON population_years.country_id = countries.id WHERE continent = 'South America' AND year = 2003; 
+-- practice, check a left join
+
+SELECT Count(*) FROM population_years JOIN countries 
+ON population_years.country_id = countries.id;
+
+SELECT Count(*) FROM population_years LEFT JOIN countries 
+ON population_years.country_id = countries.id;
+
+-- what country has the smallest population?
+SELECT name, MIN(population) AS 'population_million' 
+FROM population_years JOIN countries 
+ON population_years.country_id = countries.id WHERE year = 2007;
+
+-- what is the average population of poland during the time period covered by this datasheet?
+SELECT name, AVG(population) FROM population_years JOIN countries 
+ON population_years.country_id = countries.id WHERE name = 'Poland';
+
+-- how many countries have the word 'The' in their names?
+ SELECT COUNT(*) FROM countries WHERE name LIKE '% The%';
+
+-- what was the total population of each continent in 2010?
+SELECT continent, SUM(population) AS 'population'
+ FROM population_years JOIN countries 
+ON population_years.country_id = countries.id 
+WHERE year = 2010 
+GROUP BY continent ORDER BY 2 DESC; 
