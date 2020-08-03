@@ -1,0 +1,28 @@
+https://gist.github.com/836835eeff178cdd41b2fd77d91a041b
+ -- Davie's Burgers Subway Ad--
+ -- tagline in enteertaintment is a short text which serve to clarify a thought
+-- getting feel for the orders table the first 10 rows 
+SELECT * FROM orders LIMIT 10;
+
+-- find all distinct values from order_date 
+SELECT DISTINCT order_date FROM orders LIMIT 10;
+
+-- write a query that selects only the special_instructions column limit to 20 rows
+SELECT special_instructions FROM orders LIMIT 20;
+
+-- edit the above query so that we are only returning special instruction non-empty
+SELECT special_instructions FROM orders WHERE special_instructions IS NOT NULL LIMIT 10;
+-- sort in alphabetical ordet (A-Z)
+SELECT special_instructions FROM orders WHERE special_instructions IS NOT NULL ORDER BY special_instructions ASC LIMIT 10;
+
+-- find if special_instructions column have word 'sauce' 
+SELECT special_instructions FROM orders WHERE special_instructions LIKE '%sauce%';
+
+-- find if special_instructions column have word 'sauce' 
+SELECT special_instructions FROM orders WHERE special_instructions LIKE "%door%";
+
+-- find if special_instructions column have word 'box'
+SELECT special_instructions FROM orders WHERE special_instructions LIKE '%box%';
+
+-- rename id as '#' and special intructions as 'Notes'
+SELECT id AS '#', special_instructions AS "Notes" FROM orders WHERE special_instructions LIKE '%box%' LIMIT 10;
