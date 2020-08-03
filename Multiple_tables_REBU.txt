@@ -1,0 +1,38 @@
+REBU is a ride sharing platform 
+You were given three tables 
+trips - trips information
+riders - users data
+cars - autonomous cars
+
+https://gist.github.com/386420786ce9039656e9171dfc128d5d
+
+-- lets have a felling about the containtment of the tables
+SELECT * FROM trips;
+SELECT * FROM riders;
+SELECT * FROM cars;
+-- what's the priamry key of trips, riders and cars?
+-- id is the primary key for every table 
+
+--Try out cross join between riders and cars is the result useful? NO
+SELECT riders.first, cars.model FROM riders CROSS JOIN cars;
+
+-- create a Trip Log with trips and its users find the join between trips and riders and then combine the two tables LEFT JOIN 
+SELECT * FROM trips LEFT JOIN riders ON trips.rider_id = riders.id;
+
+-- suppose we want to create a link between trips and cars used during those trips, find the columns to join both tables by using OINNER JOIN
+SELECT * FROM trips JOIN cars ON trips.car_id = cars.id;
+
+-- stack the riders table on top of the new table named riders2
+SELECT * FROM riders UNION SELECT * FROM riders2;
+
+-- what is the average cost of the trip?
+SELECT AVG(cost) FROM trips;
+
+-- find all  the riders who have used REBU less than 500 times 
+SELECT * FROM riders WHERE total_trips > 500;
+
+--calculate the numbers of cars that are active 
+SELECT * FROM cars WHERE status = 'active';
+
+-- write a query that finds the car with highest trips_completed
+SELECT * FROM cars ORDER BY trips_completed DESC LIMIT 2;
